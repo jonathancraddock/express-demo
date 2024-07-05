@@ -18,3 +18,8 @@ Terminal, in folder. Init to initialise the project, creating `package.json`.
 npm init -y
 ```
 
+Then install express:
+```dos
+npm i express
+```
+
