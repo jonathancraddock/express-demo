@@ -18,8 +18,9 @@ Terminal, in folder. Init to initialise the project, creating `package.json`.
 npm init -y
 ```
 
-Then install express:
+Then install express and nodemon:
 ```dos
 npm i express
+npm i --save-dev nodemon
 ```
 
