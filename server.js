@@ -6,7 +6,7 @@ app.set('view engine', 'twig');
 app.set('views', './views');
 
 app.get('/', (req, res) => {
-    console.log('you are here: /');
+    console.log('you are here: //');
     res.render('index', { title: 'Twig Welcome', message: 'Sent this wording!'});
 });
 

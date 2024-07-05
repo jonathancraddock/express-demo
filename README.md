@@ -148,25 +148,7 @@ Then create a file, `./views/index.twig`.
 </html>
 ```
 
-And modify `server.js` to render that index template.
-
-```js
-const express = require('express');
-const app = express();
-
-// render with twig, and set views directory
-app.set('view engine', 'twig');
-app.set('views', './views');
-
-app.get('/', (req, res) => {
-    console.log('you are here: /');
-    res.render('index');
-});
-
-app.listen(3000)
-```
-
-To pass values to the template, modify index:
+To pass values to the template, modify index using moustache style markup:
 
 ```twig
 <!DOCTYPE html>
@@ -177,7 +159,6 @@ To pass values to the template, modify index:
 <body>
 
     <h1>{{title}}</h1>
-
     <p>{{message}}</p>
 
 </body>
@@ -201,3 +182,13 @@ app.get('/', (req, res) => {
 
 app.listen(3000);
 ```
+
+And for slightly more robust behaviour in case of a missing value:
+
+```twig
+    <h1>{{ title|default('Default title')|e }}</h1>
+    <p>{{ message|default('Default Message!')|e }}</p>
+```
+
+The `|e` escapes any potentially unsafe characters.
+

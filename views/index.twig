@@ -5,9 +5,8 @@
 </head>
 <body>
 
-    <h1>{{title}}</h1>
-
-    <p>{{message}}</p>
+    <h1>{{ title|default('Default title')|e }}</h1>
+    <p>{{ message|default('Default Message!')|e }}</p>
 
 </body>
 </html>
