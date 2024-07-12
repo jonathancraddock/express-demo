@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    console.log('you are here: //posts/');
+    res.render('index', { title: 'Posts', message: 'You\'re at the root of /Posts!'});
+});
+
 router.get('/page-one', (req, res) => {
     console.log('you are here: //posts/page-one');
     res.render('index', { title: 'Page One', message: 'You\'re on page one!'});
