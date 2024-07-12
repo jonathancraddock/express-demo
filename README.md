@@ -250,3 +250,67 @@ app.use('/posts', postsRouter);
 
 app.listen(3000);
 ```
+
+To be able to serve static files/routes (CSS files for example) create a `public` subfolder to contain all your CSS, JS, etc.
+
+your-project/
+├── public/
+│   └── css/
+│       ├── bulma.min.css
+│       └── all.min.css
+├── views/
+│   └── index.twig
+├── app.js (or server.js)
+└── package.json
+
+This requires `path` in `server.js`.
+
+```js
+const express = require('express');
+const app = express();
+const path = require('path');
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// render with twig, and set views directory
+app.set('view engine', 'twig');
+app.set('views', './views');
+
+app.get('/', (req, res) => {
+    console.log('you are here: //');
+    res.render('index', { title: 'Twig Welcome', message: 'Sent this wording!'});
+});
+
+const postsRouter = require('./routes/posts');
+app.use('/posts', postsRouter);
+
+app.listen(3000);
+```
+
+Modify the `index.twig` template to reference the CSS.
+
+```twig
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title|default('Default Title')|e }}</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+</head>
+
+<body>
+
+<section class="section">
+<div class="container">
+    <h1 class="title">{{ title|default('Default Title')|e }}</h1>
+    <p>{{ message|default('Default Message!')|e }}</p>
+</div> <!-- /container ->
+</section>
+
+</body>
+</html>
+```
