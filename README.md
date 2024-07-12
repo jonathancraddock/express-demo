@@ -217,6 +217,11 @@ But, those routes can me moved into their own file. The convention is a sub-fold
 const express = require('express');
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    console.log('you are here: //posts/');
+    res.render('index', { title: 'Posts', message: 'You\'re at the root of /Posts!'});
+});
+
 router.get('/page-one', (req, res) => {
     console.log('you are here: //posts/page-one');
     res.render('index', { title: 'Page One', message: 'You\'re on page one!'});
@@ -253,15 +258,15 @@ app.listen(3000);
 
 To be able to serve static files/routes (CSS files for example) create a `public` subfolder to contain all your CSS, JS, etc.
 
-your-project/
-├── public/
-│   └── css/
-│       ├── bulma.min.css
-│       └── all.min.css
-├── views/
-│   └── index.twig
-├── app.js (or server.js)
-└── package.json
+your-project/  
+├── public/  
+│   └── css/  
+│       ├── bulma.min.css  
+│       └── all.min.css  
+├── views/  
+│   └── index.twig  
+├── app.js (or server.js)  
+└── package.json  
 
 This requires `path` in `server.js`.
 
