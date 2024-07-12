@@ -319,3 +319,12 @@ Modify the `index.twig` template to reference the CSS.
 </body>
 </html>
 ```
+
+To create a dynamic route, use a `:` to indicate the dynamic part of the URL. (Note the use of backticks!!) For example:
+
+```js
+router.get('/id/:pageid', (req, res) => {
+    console.log(`you are here: //posts/id/${req.params.pageid}`);
+    res.render('index', { title: 'Request For...', message: `You're asking for ${req.params.pageid}`});
+});
+```
