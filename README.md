@@ -211,3 +211,42 @@ app.get('/posts/page-two', (req, res) => {
 });
 ```
 
+But, those routes can me moved into their own file. The convention is a sub-folder `routes`. In this example, `routes/posts.js` because this route will deal with everything in the `/posts/` path. Step one, move the routes from server to posts. The framework is as follows:
+
+```js
+const express = require('express');
+const router = express.Router();
+
+router.get('/page-one', (req, res) => {
+    console.log('you are here: //posts/page-one');
+    res.render('index', { title: 'Page One', message: 'You\'re on page one!'});
+});
+
+router.get('/page-two', (req, res) => {
+    console.log('you are here: //posts/page-two');
+    res.render('index', { title: 'Page Two', message: 'You\'re on page two'});
+});
+
+module.exports = router;
+```
+
+Modify the `server.js` file to use these routes:
+
+```js
+const express = require('express');
+const app = express();
+
+// render with twig, and set views directory
+app.set('view engine', 'twig');
+app.set('views', './views');
+
+app.get('/', (req, res) => {
+    console.log('you are here: //');
+    res.render('index', { title: 'Twig Welcome', message: 'Sent this wording!'});
+});
+
+const postsRouter = require('./routes/posts');
+app.use('/posts', postsRouter);
+
+app.listen(3000);
+```
