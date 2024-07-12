@@ -192,3 +192,22 @@ And for slightly more robust behaviour in case of a missing value:
 
 The `|e` escapes any potentially unsafe characters.
 
+To add extra routes, modify the `server.js` file:
+
+```js
+app.get('/', (req, res) => {
+    console.log('you are here: //');
+    res.render('index', { title: 'Twig Welcome', message: 'Sent this wording!'});
+});
+
+app.get('/posts/page-one', (req, res) => {
+    console.log('you are here: //posts/page-one');
+    res.render('index', { title: 'Page One', message: 'You\'re on page one!'});
+});
+
+app.get('/posts/page-two', (req, res) => {
+    console.log('you are here: //posts/page-two');
+    res.render('index', { title: 'Page Two', message: 'You\'re on page two'});
+});
+```
+
