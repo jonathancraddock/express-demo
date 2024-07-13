@@ -328,3 +328,18 @@ router.get('/id/:pageid', (req, res) => {
     res.render('index', { title: 'Request For...', message: `You're asking for ${req.params.pageid}`});
 });
 ```
+
+For more advanced routing, you can group requests - for example, a GET and a POST. This example is a modification to `posts.js`.
+
+```js
+router
+.route('/id/:pageid')
+.get((req, res) => {
+    console.log(`you are GET'ing here: //posts/id/${req.params.pageid}`);
+    res.render('index', { title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
+})
+.post((req, res) => {
+    console.log(`you are POST'ing here: //posts/id/${req.params.pageid}`);
+    res.json({ title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
+});
+```
