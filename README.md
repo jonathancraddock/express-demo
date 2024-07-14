@@ -381,3 +381,30 @@ function logRequest(req, res, next) {
 }
 ```
 
+By removing that code (`//app.use(logRequest)`) the function can be called on individual routes:
+
+```js
+// routes for "/posts/..."
+const postsRouter = require('./routes/posts');
+app.use('/posts', logRequest, postsRouter);
+```
+
+Back to TWIG, to tidy up the template, common sections (eg/ HEAD) can be "included" in the main template.
+
+your-project/  
+├── public/  
+│   └── css/  
+│       ├── bulma.min.css  
+│       └── all.min.css  
+├── views/  
+│   └── index.twig  
+│   └── partials  
+│       ├── head.twig  
+│       ├── footer.twig  
+
+Move the HEAD section to the `views/partials/head.twig` file and use the following syntax to include it in `index.twig`:
+
+```twig
+{% include 'partials/head.twig' %}
+```
+

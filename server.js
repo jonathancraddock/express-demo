@@ -3,14 +3,14 @@ const app = express();
 const path = require('path');
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // render with twig, and set views directory
 app.set('view engine', 'twig');
 app.set('views', './views');
 
 // log all requests
-app.use(logRequest);
+//app.use(logRequest);
 
 // routes for "/"
 app.get('/', (req, res) => {
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 // routes for "/posts/..."
 const postsRouter = require('./routes/posts');
-app.use('/posts', postsRouter);
+app.use('/posts', logRequest, postsRouter);
 
 // log the URL of each request
 function logRequest(req, res, next) {
