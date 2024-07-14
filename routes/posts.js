@@ -6,6 +6,18 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'Posts', message: 'You\'re at the root of /Posts!'});
 });
 
+router
+.route('/new')
+.get((req, res) => {
+    console.log('you are GET\'ing here: //posts/new');
+    res.render('form', { title: 'New Page' });
+})
+.post((req, res) => {
+    console.log('you are POST\'ing here: //posts/new');
+    console.log(`User submitted title of: ${req.body.title}`);
+    res.json({ title: `${req.body.title}`, message: 'You posted to /posts/new'});
+});
+
 router.get('/page-one', (req, res) => {
     console.log('you are GET\'ing here: //posts/page-one');
     res.render('index', { title: 'Page One', message: 'You\'re on page one!'});

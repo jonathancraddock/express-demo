@@ -5,6 +5,9 @@ const path = require('path');
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
+
 // render with twig, and set views directory
 app.set('view engine', 'twig');
 app.set('views', './views');
@@ -24,7 +27,7 @@ app.use('/posts', logRequest, postsRouter);
 
 // log the URL of each request
 function logRequest(req, res, next) {
-    console.log(`Request URL is: ${req.url}`);
+    console.log(`Request is for: ${req.url} at ${new Date().toISOString()}`);
     next();
 }
 

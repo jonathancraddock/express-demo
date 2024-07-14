@@ -375,8 +375,9 @@ app.use(logRequest);
 // routes
 ...
 
+// log the URL of each request
 function logRequest(req, res, next) {
-    console.log(`Request URL is: ${req.url}`);
+    console.log(`Request is for: ${req.url} at ${new Date().toISOString()}`);
     next();
 }
 ```
@@ -408,3 +409,55 @@ Move the HEAD section to the `views/partials/head.twig` file and use the followi
 {% include 'partials/head.twig' %}
 ```
 
+Create a basic form, `views/form.twig`.
+
+```twig
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'partials/head.twig' %}
+
+<body>
+<section class="section">
+
+<div class="container">
+
+<form action="/posts/new" method="POST">
+    <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+            <input class="input" type="text" name="title" value="{{ title|default('Default Title')|e }}" placeholder="Enter a new title...">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button class="button is-primary" type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+</div> <!-- /container -->
+```
+
+For express to be able to read submitted form info, you'll need:
+
+```js
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
+```
+
+Then in the routes file, `posts.js`, create GET and POST routes for the new form:
+
+```js
+router
+.route('/new')
+.get((req, res) => {
+    console.log('you are GET\'ing here: //posts/new');
+    res.render('form', { title: 'New Page' });
+})
+.post((req, res) => {
+    console.log('you are POST\'ing here: //posts/new');
+    console.log(`User submitted title of: ${req.body.title}`);
+    res.json({ title: `${req.body.title}`, message: 'You posted to /posts/new'});
+});
+```
