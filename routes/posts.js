@@ -7,12 +7,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/page-one', (req, res) => {
-    console.log('you are here: //posts/page-one');
+    console.log('you are GET\'ing here: //posts/page-one');
     res.render('index', { title: 'Page One', message: 'You\'re on page one!'});
 });
 
 router.get('/page-two', (req, res) => {
-    console.log('you are here: //posts/page-two');
+    console.log('you are GET\'ing here: //posts/page-two');
     res.render('index', { title: 'Page Two', message: 'You\'re on page two'});
 });
 
@@ -26,5 +26,11 @@ router
     console.log(`you are POST'ing here: //posts/id/${req.params.pageid}`);
     res.json({ title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
 });
+
+router.param('pageid', (req, res, next, id) => {
+    console.log(`router param : ${id}`);
+    next();
+});
+
 
 module.exports = router;

@@ -343,3 +343,41 @@ router
     res.json({ title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
 });
 ```
+
+As a form of middleware, `router.param` runs before the route. For example, `router.param('id'...)` would run between the request and the response. In the file `posts.js` this code is inserted before the `module.exports` and echoes the ID to the console:
+
+```js
+router
+.route('/id/:pageid')
+.get((req, res) => {
+    console.log(`you are GET'ing here: //posts/id/${req.params.pageid}`);
+    res.render('index', { title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
+})
+.post((req, res) => {
+    console.log(`you are POST'ing here: //posts/id/${req.params.pageid}`);
+    res.json({ title: 'Request For...', message: `You're asking for ${req.params.pageid}`})
+});
+
+router.param('pageid', (req, res, next, id) => {
+    console.log(`router param : ${id}`);
+    next();
+});
+
+module.exports = router;
+```
+
+Another example, to log all URLs requested, with theses additions to `server.js`:
+
+```js
+// log all requests
+app.use(logRequest);
+
+// routes
+...
+
+function logRequest(req, res, next) {
+    console.log(`Request URL is: ${req.url}`);
+    next();
+}
+```
+
